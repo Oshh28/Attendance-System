@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhilTech - GMA | Gate Pass</title>
+    <link rel="stylesheet" href="HomePage.css">
+    <link rel="stylesheet" href="GatePass.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        :root {
+            --red:       #D32F2F;
+            --red-dark:  #B71C1C;
+            --red-light: #EF5350;
+            --dark:      #1A1A1A;
+            --gray:      #9E9E9E;
+            --white:     #FFFFFF;
+            --font:      'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="HomePage.html" class="navbar-logo">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="logo-text-group">
+                    <span class="logo-text">PhilTech<span class="logo-tag">-GMA</span></span>
+                    <span class="logo-sub">Attendance System</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="HomePage.html" class="nav-link">Home</a>
+                <a href="Teachers.html" class="nav-link">Teacher's</a>
+                <a href="GatePass.html" class="nav-link active">Gate Pass</a>
+            </nav>
+            <div class="navbar-profile">
+                <div class="profile-info">
+                    <span class="profile-name">John Smith</span>
+                    <span class="profile-role">Student</span>
+                </div>
+                <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="HomePage.html" class="mobile-link">Home</a>
+            <a href="Teachers.html" class="mobile-link">Teacher's</a>
+            <a href="GatePass.html" class="mobile-link active">Gate Pass</a>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">PhilTech - GMA</h1>
+            <p class="hero-subtitle">Gate Pass</p>
+        </div>
+    </section>
+
+    <!-- ===== MAIN ===== -->
+    <main class="gatepass-main">
+        <div class="gatepass-container">
+
+            <!-- Heading -->
+            <div class="gp-heading">
+                <h2>Gate <span class="red-text">Pass</span></h2>
+                <p>For guard use only — manually record student entry when the QR scanner is unavailable.</p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="gp-card">
+                <div class="gp-card-header">
+                    <div class="gp-card-icon">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <div>
+                        <h3>Student Details</h3>
+                        <p class="gp-card-sub">Enter the student information below</p>
+                    </div>
+                </div>
+
+                <!-- Student No -->
+                <div class="gp-form-group">
+                    <label>Student No:</label>
+                    <input type="text" id="gpStudentNo" class="gp-input"
+                           placeholder="Enter Student No." autocomplete="off">
+                    <!-- Student name preview (auto-fill) -->
+                    <div class="student-preview" id="studentPreview" style="display:none;">
+                        <div class="preview-avatar"><i class="fa-solid fa-user"></i></div>
+                        <div class="preview-info">
+                            <span class="preview-name" id="previewName"></span>
+                            <span class="preview-section" id="previewSection"></span>
+                        </div>
+                        <div class="preview-status" id="previewStatus"></div>
+                    </div>
+                    <div class="student-not-found" id="studentNotFound" style="display:none;">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        Student number not found in database.
+                    </div>
+                </div>
+
+                <!-- Section -->
+                <div class="gp-form-group">
+                    <label>Student Section:</label>
+                    <div class="gp-select-wrapper">
+                        <select id="gpSection" class="gp-select">
+                            <option value="">Select Student Section</option>
+                            <option value="BSCS 1M1">BSCS 1M1</option>
+                            <option value="BSCS 2M1">BSCS 2M1</option>
+                            <option value="BSCS 3M1">BSCS 3M1</option>
+                            <option value="BSCS 4M1">BSCS 4M1</option>
+                            <option value="BSOA 1M1">BSOA 1M1</option>
+                            <option value="BSOA 2M1">BSOA 2M1</option>
+                            <option value="BSOA 3M1">BSOA 3M1</option>
+                            <option value="BSOA 4M1">BSOA 4M1</option>
+                            <option value="BTVTEd 1M1">BTVTEd 1M1</option>
+                            <option value="BTVTEd 2M1">BTVTEd 2M1</option>
+                            <option value="BTVTEd 3M1">BTVTEd 3M1</option>
+                            <option value="BTVTEd 4M1">BTVTEd 4M1</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down gp-select-arrow"></i>
+                    </div>
+                </div>
+
+                <!-- Time Picker -->
+                <div class="gp-form-group">
+                    <label>Choose time:</label>
+                    <div class="time-picker">
+                        <!-- Hours -->
+                        <div class="time-col">
+                            <button class="time-btn" onclick="changeTime('hours', 1)">
+                                <i class="fa-solid fa-chevron-up"></i>
+                            </button>
+                            <span class="time-display" id="timeHours">10</span>
+                            <button class="time-btn" onclick="changeTime('hours', -1)">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <span class="time-colon">:</span>
+                        <!-- Minutes -->
+                        <div class="time-col">
+                            <button class="time-btn" onclick="changeTime('minutes', 1)">
+                                <i class="fa-solid fa-chevron-up"></i>
+                            </button>
+                            <span class="time-display" id="timeMinutes">30</span>
+                            <button class="time-btn" onclick="changeTime('minutes', -1)">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <!-- AM/PM -->
+                        <div class="time-ampm">
+                            <button class="ampm-btn active" id="btnAM" onclick="setAMPM('AM')">AM</button>
+                            <button class="ampm-btn" id="btnPM" onclick="setAMPM('PM')">PM</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error -->
+                <p class="gp-error" id="gpError"></p>
+
+                <!-- Submit -->
+                <button class="gp-submit-btn" id="gpSubmitBtn" onclick="submitGatePass()">
+                    <span id="gpSubmitText">SUBMIT</span>
+                </button>
+            </div>
+
+            <!-- Recent Logs -->
+            <div class="gp-logs-section" id="gpLogsSection">
+                <h3 class="gp-logs-title">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Today's Gate Pass Logs
+                </h3>
+                <div class="gp-logs-wrapper">
+                    <table class="gp-logs-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Student No.</th>
+                                <th>Student Name</th>
+                                <th>Section</th>
+                                <th>Time In</th>
+                                <th>Processed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gpLogsBody">
+                            <tr>
+                                <td colspan="6" class="gp-logs-empty">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                    No gate pass entries today.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== SUCCESS MODAL ===== -->
+    <div class="modal-overlay" id="gpSuccessModal">
+        <div class="gp-success-box">
+            <div class="gp-success-top">
+                <div class="gp-success-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+            </div>
+            <div class="gp-success-body">
+                <h2>Gate Pass Recorded!</h2>
+                <p id="gpSuccessMsg">The student entry has been successfully recorded.</p>
+                <div class="gp-success-details" id="gpSuccessDetails"></div>
+                <button class="gp-submit-btn" onclick="closeSuccessModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer-dark">
+        <div class="footer-logo">PHILTECH</div>
+        <p class="footer-tagline">Global success through academic excellence</p>
+    </footer>
+
+    <script src="GatePass.js"></script>
+</body>
+</html>

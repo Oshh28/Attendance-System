@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhilTech - GMA | Students</title>
+
+    <!-- 
+        ⚠️  IMPORTANT: Make sure these CSS file names match YOUR actual files.
+        If your main CSS is called "HomePage.css", keep it. 
+        It must define: --red, --red-dark, --dark, --gray, --font CSS variables.
+    -->
+    <link rel="stylesheet" href="HomePage.css">
+    <link rel="stylesheet" href="SectionData.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- QR Code generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- EmailJS — for sending QR to student email -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+    <!-- CSS Variable fallback (in case HomePage.css doesn't define them) -->
+    <style>
+        :root {
+            --red:      #D32F2F;
+            --red-dark: #B71C1C;
+            --dark:     #1A1A1A;
+            --gray:     #9E9E9E;
+            --font:     'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="HomePage.html" class="navbar-logo">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <span class="logo-text">PhilTech<span class="logo-tag">-GMA</span></span>
+            </a>
+            <nav class="nav-links">
+                <a href="HomePage.html" class="nav-link">Home</a>
+                <a href="Teachers.html" class="nav-link">Teacher's</a>
+                <a href="GatePass.html" class="nav-link">Gate Pass</a>
+            </nav>
+            <div class="navbar-profile">
+                <div class="profile-info">
+                    <span class="profile-name">John Smith</span>
+                    <span class="profile-role">Admin</span>
+                </div>
+                <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="HomePage.html" class="mobile-link">Home</a>
+            <a href="Teachers.html" class="mobile-link">Teacher's</a>
+            <a href="GatePass.html" class="mobile-link">Gate Pass</a>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">PhilTech - GMA</h1>
+            <p class="hero-subtitle">Attendance</p>
+        </div>
+    </section>
+
+    <!-- ===== MAIN PAGE ===== -->
+    <main class="students-main">
+        <div class="students-container">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="page-header-left">
+                    <button class="back-btn" onclick="window.location.href='HomePage.html'">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h1 class="section-title" id="sectionTitle">Loading...</h1>
+                        <p class="student-count">
+                            <i class="fa-solid fa-users"></i>
+                            Students: <span id="studentCount">0</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="page-header-right">
+                    <button class="btn-secondary" onclick="window.location.href='Schedule.html?section='+encodeURIComponent(currentSection)">
+                        <i class="fa-regular fa-calendar"></i> See Schedule
+                    </button>
+                    <button class="btn-primary" onclick="openAddModal()">
+                        <i class="fa-solid fa-plus"></i> Add Student
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters Bar -->
+            <div class="filters-bar">
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search for students...">
+                </div>
+                <div class="filter-group">
+                    <select id="genderFilter" class="filter-select">
+                        <option value="">Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">Status</option>
+                        <option value="ENROLLED">Enrolled</option>
+                        <option value="IRREGULAR">Irregular</option>
+                        <option value="DROPPED">Dropped</option>
+                    </select>
+                    <button class="btn-filter" onclick="clearFilters()">
+                        <i class="fa-solid fa-sliders"></i> Clear Filters
+                    </button>
+                </div>
+            </div>
+
+            <!-- Student Table -->
+            <div class="table-wrapper">
+                <table class="students-table">
+                    <thead>
+                        <tr>
+                            <th class="col-check">
+                                <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)">
+                            </th>
+                            <th class="col-no">NO.</th>
+                            <th class="col-id">STUDENT ID</th>
+                            <th class="col-student">STUDENT</th>
+                            <th class="col-gender">GENDER</th>
+                            <th class="col-attendance">ATTENDANCE</th>
+                            <th class="col-timein">TIME IN</th>
+                            <th class="col-timeout">TIME OUT</th>
+                            <th class="col-status">STATUS</th>
+                            <th class="col-sem">SEM</th>
+                            <th class="col-action"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentTableBody"></tbody>
+                </table>
+
+                <div class="empty-state" id="emptyState" style="display:none;">
+                    <i class="fa-solid fa-user-slash"></i>
+                    <p>No students found.</p>
+                    <span>Try adjusting filters or add a new student.</span>
+                </div>
+
+                <div class="loading-state" id="loadingState">
+                    <div class="spinner"></div>
+                    <p>Loading students...</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer-dark">
+        <div class="footer-logo">PHILTECH</div>
+        <p class="footer-tagline">Global success through academic excellence</p>
+    </footer>
+
+    <!-- =====================================================
+         ADD / EDIT STUDENT MODAL
+    ===================================================== -->
+    <div class="modal-overlay" id="studentModal">
+        <div class="modal-box">
+
+            <button class="modal-close" onclick="closeModal('studentModal')">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="modal-header-block">
+                <div class="modal-avatar-circle">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h2 class="modal-title" id="modalTitle">Add Student</h2>
+                <p class="modal-subtitle">Add a new student for this section</p>
+            </div>
+
+            <div class="modal-section-label">Personal Details</div>
+
+            <div class="form-group" style="margin-bottom:14px;">
+                <label>Student No.</label>
+                <input type="text" id="studentNo" placeholder="e.g. 2024-00001"
+                       style="width:100%;padding:9px 11px;border:1px solid #ddd;border-radius:8px;
+                              font-family:var(--font);font-size:13px;color:var(--dark);
+                              outline:none;box-sizing:border-box;">
+            </div>
+
+            <div class="modal-top-row">
+                <!-- Left: fields -->
+                <div class="modal-fields-col">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name</label>
+                            <input type="text" id="firstName" placeholder="Enter First Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <input type="text" id="lastName" placeholder="Enter Last Name">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Middle Name</label>
+                            <input type="text" id="middleName" placeholder="Enter Middle Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="Male" checked> Male
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="gender" value="Female"> Female
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="emailAddress" placeholder="Enter Your Email Address">
+                    </div>
+                </div>
+
+                <!-- Right: photo -->
+                <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                    <img id="photoPreview" src="" alt=""
+                         style="display:none; width:100%; height:100%; object-fit:cover; border-radius:10px;">
+                    <div id="photoPlaceholder">
+                        <div class="photo-cam-circle">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <span>Add Photo</span>
+                    </div>
+                    <input type="file" id="photoInput" accept="image/*"
+                           style="display:none;" onchange="previewPhoto(this)">
+                </div>
+            </div>
+
+            <hr class="modal-divider">
+
+            <div class="modal-section-label">Basic Details</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Section</label>
+                    <select id="studentSection">
+                        <option value="">Select Student Section</option>
+                        <option value="BSCS 1M1">BSCS 1M1</option>
+                        <option value="BSCS 2M1">BSCS 2M1</option>
+                        <option value="BSCS 3M1">BSCS 3M1</option>
+                        <option value="BSCS 4M1">BSCS 4M1</option>
+                        <option value="BSOA 1M1">BSOA 1M1</option>
+                        <option value="BSOA 2M1">BSOA 2M1</option>
+                        <option value="BSOA 3M1">BSOA 3M1</option>
+                        <option value="BSOA 4M1">BSOA 4M1</option>
+                        <option value="BTVTEd 1M1">BTVTEd 1M1</option>
+                        <option value="BTVTEd 2M1">BTVTEd 2M1</option>
+                        <option value="BTVTEd 3M1">BTVTEd 3M1</option>
+                        <option value="BTVTEd 4M1">BTVTEd 4M1</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>School Year</label>
+                    <select id="schoolYear">
+                        <option value="">Select School Year</option>
+                        <option value="2024-2025">2024-2025</option>
+                        <option value="2025-2026">2025-2026</option>
+                        <option value="2026-2027">2026-2027</option>
+                        <option value="2027-2028">2027-2028</option>
+                        <option value="2028-2029">2028-2029</option>
+                        <option value="2029-2030">2029-2030</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="studentStatus">
+                        <option value="">Select Student Status</option>
+                        <option value="ENROLLED">Enrolled</option>
+                        <option value="IRREGULAR">Irregular</option>
+                        <option value="DROPPED">Dropped</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Semester</label>
+                    <select id="studentSem">
+                        <option value="">Select Semester</option>
+                        <option value="1">1st Semester</option>
+                        <option value="2">2nd Semester</option>
+                    </select>
+                </div>
+            </div>
+
+            <p class="form-error" id="formError"></p>
+            <button class="btn-save" id="saveBtn" onclick="saveStudent()">Save</button>
+
+        </div>
+    </div>
+
+    <!-- =====================================================
+         SUCCESS MODAL
+    ===================================================== -->
+    <div class="modal-overlay" id="successModal">
+        <div class="success-box">
+            <div class="success-top">
+                <div class="success-badge">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+            </div>
+            <div class="success-body">
+                <h2 class="success-title" id="successTitle">Successfully Added</h2>
+                <p class="success-msg" id="successMsg">
+                    The student information has been successfully added.
+                </p>
+                <p class="success-note" id="successNote" style="display:none;">
+                    Please check your email to access the QR Code.
+                </p>
+                <button class="btn-save" onclick="closeModal('successModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================
+         DELETE MODAL
+    ===================================================== -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="delete-box">
+            <div class="delete-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h2>Delete Student?</h2>
+            <p>Are you sure you want to delete <strong id="deleteStudentName"></strong>?
+               This action cannot be undone.</p>
+            <div class="delete-actions">
+                <button class="btn-cancel" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="btn-delete-confirm" id="confirmDeleteBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden QR container -->
+    <div style="position:fixed;left:-9999px;top:-9999px;z-index:-1;">
+        <div id="qrCodeOutput"></div>
+    </div>
+
+    <!-- ✅ Points to SectionData.js (NOT students.js) -->
+    <script src="SectionData.js"></script>
+</body>
+</html>
