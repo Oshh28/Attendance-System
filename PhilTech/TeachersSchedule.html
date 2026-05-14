@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhilTech - GMA | Teacher Schedule</title>
+    <link rel="stylesheet" href="HomePage.css">
+    <link rel="stylesheet" href="Schedule.css">
+    <link rel="stylesheet" href="TeachersSchedule.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        :root {
+            --red:       #D32F2F;
+            --red-dark:  #B71C1C;
+            --dark:      #1A1A1A;
+            --gray:      #9E9E9E;
+            --white:     #FFFFFF;
+            --font:      'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="HomePage.html" class="navbar-logo">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="logo-text-group">
+                    <span class="logo-text">PhilTech<span class="logo-tag">-GMA</span></span>
+                    <span class="logo-sub">Attendance System</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="HomePage.html" class="nav-link">Home</a>
+                <a href="Teachers.html" class="nav-link active">Teacher's</a>
+                <a href="GatePass.html" class="nav-link">Gate Pass</a>
+                <a href="AttendanceHistory.html" class="nav-link">History</a>
+            </nav>
+            <div class="navbar-profile">
+                <div class="profile-info">
+                    <span class="profile-name">John Smith</span>
+                    <span class="profile-role">Student</span>
+                </div>
+                <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="HomePage.html" class="mobile-link">Home</a>
+            <a href="Teachers.html" class="mobile-link active">Teacher's</a>
+            <a href="GatePass.html" class="mobile-link">Gate Pass</a>
+            <a href="AttendanceHistory.html" class="mobile-link">History</a>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">PhilTech - GMA</h1>
+            <p class="hero-subtitle">Attendance</p>
+        </div>
+    </section>
+
+    <!-- ===== MAIN ===== -->
+    <main class="schedule-main">
+        <div class="schedule-container">
+
+            <!-- Page Header -->
+            <div class="sched-page-header">
+                <div class="sched-header-left">
+                    <button class="back-btn" onclick="window.location.href='Teachers.html'">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <!-- Teacher name instead of "SCHEDULE" -->
+                        <h1 class="sched-title" id="teacherNameTitle">Loading...</h1>
+                        <!-- "Weekly Schedule" instead of section -->
+                        <p class="sched-section">
+                            <i class="fa-solid fa-calendar-week"></i>
+                            Weekly Schedule
+                        </p>
+                    </div>
+                </div>
+                <!-- No attendance button on teacher page -->
+            </div>
+
+            <!-- Semester Tabs -->
+            <div class="sem-tabs">
+                <button class="sem-tab active" data-sem="1" onclick="switchSem(1, this)">1ST SEM</button>
+                <button class="sem-tab" data-sem="2" onclick="switchSem(2, this)">2ND SEM</button>
+            </div>
+
+            <!-- Schedule Grid -->
+            <div class="sched-grid-wrapper">
+                <div class="sched-grid" id="schedGrid"></div>
+            </div>
+
+            <!-- Subject Legend -->
+            <div class="subject-legend" id="subjectLegend"></div>
+
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer-dark">
+        <div class="footer-logo">PHILTECH</div>
+        <p class="footer-tagline">Global success through academic excellence</p>
+    </footer>
+
+    <!-- =====================================================
+         EDIT SCHEDULE MODAL — Teacher version
+         Fields: Sub Code, Select Room, Section, Sidebar Colour
+    ===================================================== -->
+    <div class="modal-overlay" id="editModal">
+        <div class="edit-modal-box">
+            <button class="modal-close-red" onclick="closeEditModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="edit-modal-header">
+                <div class="edit-modal-icon">
+                    <i class="fa-regular fa-calendar-days"></i>
+                </div>
+                <h2 class="edit-modal-title" id="editModalTitle">Wednesday Schedule</h2>
+                <p class="edit-modal-subtitle">Add a new schedule for this Teacher</p>
+            </div>
+            <div class="edit-slots-container" id="editSlotsContainer"></div>
+            <button class="btn-save-sched" id="saveSchedBtn" onclick="saveSchedule()">
+                <span id="saveBtnText">Save</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="TeachersSchedule.js"></script>
+</body>
+</html>

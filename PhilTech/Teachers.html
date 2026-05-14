@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhilTech - GMA | Teachers</title>
+    <link rel="stylesheet" href="HomePage.css">
+    <link rel="stylesheet" href="Teachers.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        :root {
+            --red:       #D32F2F;
+            --red-dark:  #B71C1C;
+            --red-light: #EF5350;
+            --dark:      #1A1A1A;
+            --gray:      #9E9E9E;
+            --white:     #FFFFFF;
+            --font:      'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="HomePage.html" class="navbar-logo">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="logo-text-group">
+                    <span class="logo-text">PhilTech<span class="logo-tag">-GMA</span></span>
+                    <span class="logo-sub">Attendance System</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="HomePage.html" class="nav-link">Home</a>
+                <a href="Teachers.html" class="nav-link active">Teacher's</a>
+                <a href="GatePass.html" class="nav-link">Gate Pass</a>
+                <a href="AttendanceHistory.html" class="nav-link">History</a>
+            </nav>
+            <div class="navbar-profile">
+                <div class="profile-info">
+                    <span class="profile-name">John Smith</span>
+                    <span class="profile-role">Student</span>
+                </div>
+                <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="HomePage.html" class="mobile-link">Home</a>
+            <a href="Teachers.html" class="mobile-link active">Teacher's</a>
+            <a href="GatePass.html" class="mobile-link">Gate Pass</a>
+            <a href="AttendanceHistory.html" class="mobile-link">History</a>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">PhilTech - GMA</h1>
+            <p class="hero-subtitle">Teacher</p>
+        </div>
+    </section>
+
+    <!-- ===== MAIN ===== -->
+    <main class="teachers-main">
+        <div class="teachers-container">
+
+            <!-- Section Heading -->
+            <div class="teachers-heading">
+                <h2>Meet Our <span class="red-text">Teacher</span></h2>
+                <p>Dedicated educators shaping the future of technology and innovation at PhilTech - GMA.</p>
+            </div>
+
+            <!-- Male Teachers -->
+            <div class="gender-group" id="maleGroup">
+                <div class="gender-label">
+                    <span class="star">✳</span>
+                    Our Male Teacher
+                    <span class="star">✳</span>
+                </div>
+                <div class="teachers-grid" id="maleTeachersGrid">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
+            <!-- Female Teachers -->
+            <div class="gender-group" id="femaleGroup">
+                <div class="gender-label">
+                    <span class="star">✳</span>
+                    Our Female Teacher
+                    <span class="star">✳</span>
+                </div>
+                <div class="teachers-grid" id="femaleTeachersGrid">
+                    <!-- Injected by JS -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== ADD TEACHER MODAL ===== -->
+    <div class="modal-overlay" id="addTeacherModal">
+        <div class="modal-box">
+            <button class="modal-close-red" onclick="closeAddModal()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-header-block">
+                <div class="modal-avatar-circle">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+                <h2 class="modal-title" id="addModalTitle">Add Teacher</h2>
+                <p class="modal-subtitle">Add a new teacher to the school</p>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="teacherFirstName" placeholder="Enter First Name">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="teacherLastName" placeholder="Enter Last Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="teacherGender" value="Male" checked> Male</label>
+                    <label class="radio-label"><input type="radio" name="teacherGender" value="Female"> Female</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Major / Specialization</label>
+                <input type="text" id="teacherMajor" placeholder="e.g. Programming / Hardware">
+            </div>
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="teacherEmail" placeholder="Enter Email Address">
+            </div>
+
+            <p class="form-error" id="teacherFormError"></p>
+            <button class="btn-save" id="teacherSaveBtn" onclick="saveTeacher()">
+                <span id="teacherSaveBtnText">Save</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== DELETE CONFIRM MODAL ===== -->
+    <div class="modal-overlay" id="deleteTeacherModal">
+        <div class="delete-box">
+            <div class="delete-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <h2>Delete Teacher?</h2>
+            <p>Are you sure you want to delete <strong id="deleteTeacherName"></strong>? This cannot be undone.</p>
+            <div class="delete-actions">
+                <button class="btn-cancel" onclick="closeModal('deleteTeacherModal')">Cancel</button>
+                <button class="btn-delete-confirm" id="confirmDeleteTeacher">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FAB ADD BUTTON ===== -->
+    <button class="fab-add" onclick="openAddModal()" title="Add Teacher">
+        <i class="fa-solid fa-plus"></i>
+    </button>
+
+    <script src="Teachers.js"></script>
+</body>
+</html>

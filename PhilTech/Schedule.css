@@ -1,0 +1,582 @@
+/* =====================================================
+   PhilTech - GMA | Schedule Page Styles
+   ===================================================== */
+
+/* ===== MAIN LAYOUT ===== */
+.schedule-main {
+    padding: 36px 20px 60px;
+    min-height: 60vh;
+    background: #f7f7f7;
+}
+
+.schedule-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===== PAGE HEADER ===== */
+.sched-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.sched-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.back-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #333;
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+}
+.back-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+
+.sched-title {
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 0;
+}
+
+.sched-section {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-attendance {
+    background-color: white;
+    color: var(--dark);
+    border: 1px solid #ddd;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.2s, border 0.2s;
+    white-space: nowrap;
+}
+.btn-attendance:hover { background-color: #f5f5f5; border-color: #ccc; }
+
+/* ===== SEMESTER TABS ===== */
+.sem-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 10px;
+    padding: 4px;
+    width: fit-content;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sem-tab {
+    padding: 9px 28px;
+    border: none;
+    background: none;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray);
+    cursor: pointer;
+    border-radius: 7px;
+    transition: background 0.2s, color 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.sem-tab.active {
+    background: var(--red);
+    color: white;
+}
+
+/* ===== SCHEDULE GRID ===== */
+.sched-grid-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+    overflow-x: auto;
+    margin-bottom: 28px;
+}
+
+.sched-grid {
+    display: grid;
+    /* time col + 6 day cols */
+    grid-template-columns: 80px repeat(6, 1fr);
+    min-width: 700px;
+}
+
+/* Header row cells */
+.grid-header-cell {
+    padding: 12px 10px 10px;
+    background: white;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dark);
+    border-bottom: 2px solid #f0f0f0;
+    position: relative;
+}
+
+.grid-header-cell .edit-day-btn {
+    display: block;
+    margin-top: 4px;
+    width: 22px;
+    height: 22px;
+    background: #f5f5f5;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--gray);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+.grid-header-cell .edit-day-btn:hover { background: var(--red); color: white; }
+
+/* Time label cell */
+.grid-time-cell {
+    padding: 0 10px;
+    background: white;
+    border-bottom: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.grid-time-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #bbb;
+    white-space: pre-line;
+    text-align: right;
+    line-height: 1.4;
+}
+
+/* Regular slot cell */
+.grid-slot-cell {
+    border-bottom: 1px solid #f5f5f5;
+    border-right: 1px solid #f5f5f5;
+    min-height: 52px;
+    padding: 4px;
+    position: relative;
+    vertical-align: top;
+}
+
+/* Break / Lunch row */
+.grid-break-row {
+    grid-column: 1 / -1;
+    background: #fafafa;
+    padding: 7px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #bbb;
+    letter-spacing: 1.5px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.grid-break-row .break-time-range {
+    font-size: 10px;
+    font-weight: 500;
+    color: #ccc;
+    letter-spacing: 0;
+}
+
+/* Subject card inside a slot */
+.subject-card {
+    border-left: 4px solid var(--red);
+    border-radius: 4px;
+    background: white;
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 1.4;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    height: 100%;
+    min-height: 44px;
+}
+
+.subject-card .subj-code {
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--dark);
+}
+
+.subject-card .subj-teacher {
+    color: var(--gray);
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.subject-card .subj-room {
+    color: var(--gray);
+    font-size: 9px;
+}
+
+/* Empty slot placeholder */
+.slot-empty {
+    width: 100%;
+    height: 44px;
+}
+
+/* ===== SUBJECT LEGEND TABLE ===== */
+.subject-legend {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.legend-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.legend-table thead tr {
+    background: var(--red);
+}
+
+.legend-table th {
+    padding: 12px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    text-align: left;
+    letter-spacing: 0.5px;
+}
+
+.legend-table th:first-child {
+    border-radius: 0;
+}
+
+.legend-table tbody tr {
+    border-bottom: 1px solid #f5f5f5;
+    transition: background 0.15s;
+}
+
+.legend-table tbody tr:last-child { border-bottom: none; }
+.legend-table tbody tr:hover { background: #fafafa; }
+
+.legend-table td {
+    padding: 11px 18px;
+    font-size: 13px;
+    color: var(--dark);
+}
+
+.legend-code {
+    font-weight: 700;
+    color: var(--red);
+}
+
+/* ===== FOOTER ===== */
+.footer-dark {
+    background-color: #111;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+}
+.footer-logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+}
+.footer-tagline {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 1px;
+}
+
+/* =====================================================
+   EDIT SCHEDULE MODAL
+   ===================================================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.50);
+    z-index: 2000;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+.modal-overlay.open { display: flex; }
+
+@keyframes slideUp {
+    from { transform: translateY(24px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+.edit-modal-box {
+    background: white;
+    border-radius: 20px;
+    padding: 32px 28px 28px;
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+    animation: slideUp 0.22s ease;
+    margin: auto;
+}
+
+/* Red X close button */
+.modal-close-red {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--red);
+    color: white;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.modal-close-red:hover { background: var(--red-dark); }
+
+/* Modal header */
+.edit-modal-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.edit-modal-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--red);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin: 0 auto 12px;
+}
+
+.edit-modal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 4px;
+}
+
+.edit-modal-subtitle {
+    font-size: 12px;
+    color: var(--gray);
+}
+
+/* Time period label */
+.time-period-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--dark);
+    margin: 20px 0 14px;
+}
+
+/* Single time slot row */
+.slot-row {
+    margin-bottom: 10px;
+}
+
+.slot-time-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;
+}
+
+.slot-time-label {
+    flex: 1;
+}
+
+.slot-time-input {
+    flex: 1;
+    padding: 9px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: var(--font);
+    font-size: 12px;
+    color: #bbb;
+    background: #fafafa;
+    outline: none;
+    transition: border 0.2s;
+    pointer-events: none; /* time slots are fixed labels */
+}
+
+/* Add / Remove buttons */
+.slot-toggle-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.slot-toggle-btn.add-btn {
+    background: #f0f0f0;
+    color: var(--gray);
+}
+.slot-toggle-btn.add-btn:hover { background: #4CAF50; color: white; }
+
+.slot-toggle-btn.remove-btn {
+    background: #ffebee;
+    color: var(--red);
+}
+.slot-toggle-btn.remove-btn:hover { background: var(--red); color: white; }
+
+/* Subject fields (shown when slot is filled) */
+.slot-subject-fields {
+    display: none;
+    margin-top: 10px;
+    padding: 14px;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+
+.slot-subject-fields.visible { display: block; }
+
+.slot-fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.slot-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.slot-field-group label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.slot-field-group input,
+.slot-field-group select {
+    padding: 8px 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 7px;
+    font-family: var(--font);
+    font-size: 12px;
+    color: var(--dark);
+    outline: none;
+    transition: border 0.2s;
+    background: white;
+}
+
+.slot-field-group input:focus,
+.slot-field-group select:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(211,47,47,0.08);
+}
+
+.slot-field-group select {
+    appearance: none;
+    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%23666' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 8px center;
+}
+
+/* Sidebar colour picker */
+.sidebar-colour-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 0;
+}
+
+.sidebar-colour-row label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--dark);
+    flex: 1;
+}
+
+.sidebar-colour-row input[type="color"] {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    padding: 2px;
+    cursor: pointer;
+    background: white;
+}
+
+/* Save button */
+.btn-save-sched {
+    display: block;
+    width: 180px;
+    margin: 24px auto 0;
+    padding: 12px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+}
+.btn-save-sched:hover { background: var(--red-dark); transform: translateY(-1px); }
+.btn-save-sched:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .nav-links    { display: none; }
+    .profile-info { display: none; }
+    .hamburger    { display: flex; }
+    .sched-page-header { flex-direction: column; align-items: flex-start; }
+    .edit-modal-box { padding: 24px 16px 20px; }
+    .slot-fields-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+    .navbar-container { padding: 12px 16px; }
+    .schedule-main    { padding: 20px 12px 50px; }
+}

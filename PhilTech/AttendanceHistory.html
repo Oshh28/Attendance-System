@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhilTech - GMA | Attendance History</title>
+    <link rel="stylesheet" href="HomePage.css">
+    <link rel="stylesheet" href="AttendanceHistory.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        :root {
+            --red:      #D32F2F;
+            --red-dark: #B71C1C;
+            --dark:     #1A1A1A;
+            --gray:     #9E9E9E;
+            --font:     'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <header class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="HomePage.html" class="navbar-logo">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div style="display:flex;flex-direction:column;line-height:1.1;">
+                    <span class="logo-text">PhilTech<span class="logo-tag">-GMA</span></span>
+                    <span style="font-size:9px;color:#9E9E9E;">Attendance System</span>
+                </div>
+            </a>
+            <nav class="nav-links">
+                <a href="HomePage.html" class="nav-link">Home</a>
+                <a href="Teachers.html" class="nav-link">Teacher's</a>
+                <a href="GatePass.html" class="nav-link">Gate Pass</a>
+                <a href="AttendanceHistory.html" class="nav-link">History</a>
+            </nav>
+            <div class="navbar-profile">
+                <div class="profile-info">
+                    <span class="profile-name">John Smith</span>
+                    <span class="profile-role">Admin</span>
+                </div>
+                <div class="profile-avatar"><i class="fa-solid fa-user"></i></div>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="HomePage.html" class="mobile-link">Home</a>
+            <a href="Teachers.html" class="mobile-link">Teacher's</a>
+            <a href="GatePass.html" class="mobile-link">Gate Pass</a>
+            <a href="AttendanceHistory.html" class="mobile-link">History</a>
+        </div>
+    </header>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">PhilTech - GMA</h1>
+            <p class="hero-subtitle">Attendance History</p>
+        </div>
+    </section>
+
+    <!-- ===== MAIN ===== -->
+    <main class="history-main">
+        <div class="history-container">
+
+            <!-- Page Header -->
+            <div class="history-page-header">
+                <div class="history-header-left">
+                    <button class="back-btn" onclick="history.back()">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h1 class="history-title">Attendance History</h1>
+                        <p class="history-sub">
+                            <i class="fa-solid fa-table-columns"></i>
+                            <span id="historySection">All Sections</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="history-header-right">
+                    <button class="btn-reset" onclick="triggerReset()" title="Run daily reset manually">
+                        <i class="fa-solid fa-rotate"></i> Reset Today
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="history-filters">
+                <div class="hf-group">
+                    <label>Section</label>
+                    <select id="filterSection" onchange="loadHistory()">
+                        <option value="">All Sections</option>
+                        <option value="BSCS 1M1">BSCS 1M1</option>
+                        <option value="BSCS 2M1">BSCS 2M1</option>
+                        <option value="BSCS 3M1">BSCS 3M1</option>
+                        <option value="BSCS 4M1">BSCS 4M1</option>
+                        <option value="BSOA 1M1">BSOA 1M1</option>
+                        <option value="BSOA 2M1">BSOA 2M1</option>
+                        <option value="BSOA 3M1">BSOA 3M1</option>
+                        <option value="BSOA 4M1">BSOA 4M1</option>
+                        <option value="BTVTEd 1M1">BTVTEd 1M1</option>
+                        <option value="BTVTEd 2M1">BTVTEd 2M1</option>
+                        <option value="BTVTEd 3M1">BTVTEd 3M1</option>
+                        <option value="BTVTEd 4M1">BTVTEd 4M1</option>
+                    </select>
+                </div>
+                <div class="hf-group">
+                    <label>Week</label>
+                    <input type="week" id="filterWeek" onchange="loadHistory()">
+                </div>
+                <div class="hf-group">
+                    <label>Student</label>
+                    <input type="text" id="filterStudent" placeholder="Search student name..." oninput="filterTable()">
+                </div>
+                <div class="hf-group">
+                    <label>Attendance</label>
+                    <select id="filterAttendance" onchange="filterTable()">
+                        <option value="">All</option>
+                        <option value="Present">Present</option>
+                        <option value="Late">Late</option>
+                        <option value="Absent">Absent</option>
+                        <option value="No Class">No Class</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards" id="summaryCards">
+                <div class="summary-card green">
+                    <div class="summary-icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="summary-info">
+                        <span class="summary-count" id="countPresent">0</span>
+                        <span class="summary-label">Present</span>
+                    </div>
+                </div>
+                <div class="summary-card orange">
+                    <div class="summary-icon"><i class="fa-solid fa-clock"></i></div>
+                    <div class="summary-info">
+                        <span class="summary-count" id="countLate">0</span>
+                        <span class="summary-label">Late</span>
+                    </div>
+                </div>
+                <div class="summary-card red">
+                    <div class="summary-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+                    <div class="summary-info">
+                        <span class="summary-count" id="countAbsent">0</span>
+                        <span class="summary-label">Absent</span>
+                    </div>
+                </div>
+                <div class="summary-card gray">
+                    <div class="summary-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
+                    <div class="summary-info">
+                        <span class="summary-count" id="countNoClass">0</span>
+                        <span class="summary-label">No Class</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="history-table-wrapper">
+                <table class="history-table" id="historyTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Day</th>
+                            <th>Student</th>
+                            <th>Section</th>
+                            <th>Subject</th>
+                            <th>Time In</th>
+                            <th>Time Out</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyBody">
+                        <tr>
+                            <td colspan="8" class="history-empty">
+                                <i class="fa-solid fa-clock-rotate-left"></i>
+                                <p>Select a section and week to view attendance history.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="history-loading" id="historyLoading" style="display:none;">
+                    <div class="spinner"></div>
+                    <p>Loading history...</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer-dark">
+        <div class="footer-logo">PHILTECH</div>
+        <p class="footer-tagline">Global success through academic excellence</p>
+    </footer>
+
+    <script src="AttendanceHistory.js"></script>
+</body>
+</html>
